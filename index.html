@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hambúrguer artesanal com carne suculenta, queijo derretendo e ingredientes selecionados. Peça agora pelo WhatsApp e receba sabor de verdade.">
+    <meta name="theme-color" content="#0d0d0d">
+    <title>Brasa Burger | Hambúrguer Artesanal de Verdade</title>
+
+    <meta property="og:title" content="Brasa Burger | Hambúrguer Artesanal de Verdade">
+    <meta property="og:description" content="Sabor artesanal de verdade. Feito na hora, servido com vontade.">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #0d0d0d; --black-soft: #161616; --dark: #1c1c1c;
+            --red-dark: #7a1212; --red: #c0202a; --orange: #ff6b1a; --yellow: #f5b921;
+            --cream: #f5efe6; --text-light: #f3f1ec; --text-muted: #b8b2a8;
+            --shadow: 0 14px 40px rgba(0, 0, 0, .45); --radius: 16px;
+            --transition: .35s cubic-bezier(.2, .7, .3, 1); --container: 1200px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: var(--black); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+        h1, h2, h3, .logo { font-family: 'Anton', sans-serif; font-weight: 400; letter-spacing: .5px; line-height: 1.1; text-transform: uppercase; }
+        .text-accent { color: var(--orange); background: linear-gradient(90deg, var(--yellow), var(--orange)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* BOTÕES */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; border-radius: 50px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; transition: var(--transition); text-align: center; white-space: nowrap; }
+        .btn-whatsapp { background: linear-gradient(135deg, #25d366, #128c4a); color: #fff; box-shadow: 0 8px 22px rgba(37, 211, 102, .35); }
+        .btn-whatsapp:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 30px rgba(37, 211, 102, .5); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, .55); }
+        .btn-outline:hover { background: #fff; color: var(--black); transform: translateY(-3px); }
+        .btn-mini { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; padding: 9px 18px; font-size: .82rem; box-shadow: 0 6px 16px rgba(192, 32, 42, .35); }
+        .btn-mini:hover { transform: translateY(-2px) scale(1.05); }
+        .btn-lg { padding: 17px 34px; font-size: 1.05rem; }
+        .btn-xl { padding: 20px 46px; font-size: 1.2rem; }
+        .btn-block { width: 100%; margin-top: 8px; }
+        .btn-nav { padding: 10px 20px; font-size: .85rem; }
+
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 18px 0; transition: var(--transition); }
+        .navbar.scrolled { background: rgba(13, 13, 13, .92); backdrop-filter: blur(12px); padding: 12px 0; box-shadow: 0 6px 24px rgba(0, 0, 0, .4); }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 6px; }
+        .logo-flame { font-size: 1.4rem; }
+        .logo-accent { color: var(--orange); }
+        .nav-menu { display: flex; align-items: center; gap: 28px; }
+        .nav-link { font-weight: 500; font-size: .95rem; color: var(--text-light); position: relative; transition: var(--transition); }
+        .nav-link::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--orange); transition: var(--transition); }
+        .nav-link:hover { color: var(--orange); }
+        .nav-link:hover::after { width: 100%; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; z-index: 1100; }
+        .hamburger span { width: 28px; height: 3px; background: #fff; border-radius: 3px; transition: var(--transition); }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* HERO */
+        .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+        .hero-video-wrap { position: absolute; inset: 0; z-index: -2; }
+        .hero-video { width: 100%; height: 100%; object-fit: cover; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 13, .96) 0%, rgba(13, 13, 13, .78) 45%, rgba(13, 13, 13, .35) 100%), linear-gradient(0deg, rgba(13, 13, 13, .85), transparent 60%); }
+        .hero-content { position: relative; z-index: 2; padding-top: 90px; padding-bottom: 60px; }
+        .hero-text { max-width: 640px; }
+        .hero-badge { display: inline-block; background: rgba(255, 107, 26, .15); border: 1px solid var(--orange); color: var(--yellow); padding: 8px 18px; border-radius: 50px; font-size: .85rem; font-weight: 600; margin-bottom: 22px; }
+        .hero-title { font-size: clamp(2.4rem, 6vw, 4.6rem); color: #fff; margin-bottom: 22px; text-shadow: 0 4px 30px rgba(0, 0, 0, .6); }
+        .hero-subtitle { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); max-width: 540px; margin-bottom: 34px; }
+        .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 38px; }
+        .hero-seals { display: flex; flex-wrap: wrap; gap: 12px 26px; }
+        .seal { font-size: .9rem; font-weight: 500; color: var(--text-light); display: inline-flex; align-items: center; gap: 6px; }
+        .scroll-down { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); width: 26px; height: 44px; border: 2px solid rgba(255, 255, 255, .5); border-radius: 20px; z-index: 2; }
+        .scroll-down span { position: absolute; top: 8px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; background: var(--orange); border-radius: 50%; animation: scrollDot 1.6s infinite; }
+        @keyframes scrollDot { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(20px); } }
+
+        /* SEÇÕES */
+        .section { padding: 90px 0; }
+        .section-dark { background: var(--black-soft); }
+        .section-head { text-align: center; max-width: 680px; margin: 0 auto 56px; }
+        .section-tag { display: inline-block; color: var(--orange); font-weight: 700; font-size: .9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+        .section-title { font-size: clamp(2rem, 4.5vw, 3.2rem); color: #fff; margin-bottom: 14px; }
+        .section-desc { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* DESTAQUES */
+        .destaques-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 26px; }
+        .destaque-card { background: linear-gradient(160deg, var(--dark), var(--black-soft)); border: 1px solid rgba(255, 255, 255, .06); border-radius: var(--radius); padding: 38px 26px; text-align: center; transition: var(--transition); }
+        .destaque-card:hover { transform: translateY(-8px); border-color: var(--orange); box-shadow: 0 16px 40px rgba(255, 107, 26, .15); }
+        .destaque-icon { font-size: 3rem; margin-bottom: 16px; display: inline-block; }
+        .destaque-card h3 { font-size: 1.3rem; color: var(--yellow); margin-bottom: 12px; }
+        .destaque-card p { color: var(--text-muted); font-size: .95rem; }
+
+        /* MENU */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 28px; }
+        .menu-card { background: var(--dark); border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(255, 255, 255, .05); transition: var(--transition); display: flex; flex-direction: column; }
+        .menu-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+        .menu-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+        .menu-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+        .menu-card:hover .menu-img img { transform: scale(1.1); }
+        .menu-flag { position: absolute; top: 12px; left: 12px; background: linear-gradient(135deg, var(--red), var(--orange)); color: #fff; padding: 5px 14px; border-radius: 50px; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+        .menu-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .menu-body h3 { font-size: 1.25rem; color: #fff; margin-bottom: 8px; }
+        .menu-body p { color: var(--text-muted); font-size: .88rem; margin-bottom: 18px; flex: 1; }
+        .menu-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .menu-price { font-family: 'Anton', sans-serif; font-size: 1.5rem; color: var(--yellow); }
+
+        /* EMOCIONAL */
+        .emocional { position: relative; padding: 130px 0; text-align: center; overflow: hidden; }
+        .emocional-bg { position: absolute; inset: 0; background-size: cover; background-position: center; background-attachment: fixed; z-index: -2; }
+        .emocional-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(13, 13, 13, .82), rgba(122, 18, 18, .55)); z-index: -1; }
+        .emocional-title { font-size: clamp(2.2rem, 5vw, 4rem); color: #fff; margin-bottom: 20px; text-shadow: 0 4px 24px rgba(0, 0, 0, .7); }
+        .emocional-sub { font-size: 1.15rem; color: var(--cream); max-width: 640px; margin: 0 auto 32px; }
+
+        /* COMBOS */
+        .combos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 26px; }
+        .combo-card { background: linear-gradient(160deg, var(--dark), var(--black-soft)); border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(255, 255, 255, .05); transition: var(--transition); }
+        .combo-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: rgba(255, 107, 26, .4); }
+        .combo-img { aspect-ratio: 16 / 11; overflow: hidden; }
+        .combo-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+        .combo-card:hover .combo-img img { transform: scale(1.08); }
+        .combo-body { padding: 22px; }
+        .combo-body h3 { font-size: 1.3rem; color: #fff; margin-bottom: 8px; }
+        .combo-body p { color: var(--text-muted); font-size: .9rem; margin-bottom: 12px; }
+        .combo-body .menu-price { display: block; margin-bottom: 6px; }
+
+        /* SOBRE */
+        .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+        .sobre-img { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+        .sobre-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .8s ease; }
+        .sobre-img:hover img { transform: scale(1.06); }
+        .sobre-text .section-title { text-align: left; margin-bottom: 20px; }
+        .sobre-text p { color: var(--text-muted); margin-bottom: 18px; font-size: 1.02rem; }
+        .sobre-text .btn { margin-top: 10px; }
+
+        /* AVALIAÇÕES */
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; }
+        .review-card { background: var(--dark); border-radius: var(--radius); padding: 30px; border: 1px solid rgba(255, 255, 255, .05); transition: var(--transition); }
+        .review-card:hover { transform: translateY(-6px); border-color: var(--yellow); }
+        .stars { color: var(--yellow); font-size: 1.2rem; margin-bottom: 14px; letter-spacing: 3px; }
+        .review-card p { color: var(--text-light); font-style: italic; margin-bottom: 22px; }
+        .review-author { display: flex; align-items: center; gap: 14px; }
+        .avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 1.2rem; }
+        .review-author span { display: flex; flex-direction: column; }
+        .review-author strong { color: #fff; font-size: .95rem; }
+        .review-author small { color: var(--text-muted); font-size: .8rem; }
+
+        /* GALERIA */
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 30px; }
+        .gallery-item { position: relative; aspect-ratio: 1; overflow: hidden; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, filter .5s ease; }
+        .gallery-item::after { content: '🔥'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: rgba(192, 32, 42, .55); opacity: 0; transition: var(--transition); }
+        .gallery-item:hover img { transform: scale(1.12); }
+        .gallery-item:hover::after { opacity: 1; }
+
+        /* CTA FINAL */
+        .cta-final { background: linear-gradient(135deg, var(--red-dark), var(--black) 70%); padding: 90px 0; text-align: center; }
+        .cta-final h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); color: #fff; margin-bottom: 12px; }
+        .cta-final > .container > p { font-size: 1.2rem; color: var(--cream); margin-bottom: 30px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 22px; margin-top: 56px; text-align: center; }
+        .info-item { background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .08); border-radius: var(--radius); padding: 24px 18px; transition: var(--transition); }
+        .info-item:hover { transform: translateY(-5px); background: rgba(255, 255, 255, .07); }
+        .info-icon { font-size: 1.8rem; display: block; margin-bottom: 8px; }
+        .info-item strong { color: var(--yellow); display: block; margin-bottom: 6px; }
+        .info-item p { color: var(--text-muted); font-size: .9rem; }
+
+        /* RODAPÉ */
+        .footer { background: var(--black); border-top: 1px solid rgba(255, 255, 255, .07); padding: 60px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.4fr 1fr; gap: 40px; }
+        .logo-footer { font-size: 1.5rem; margin-bottom: 14px; }
+        .footer-col p { color: var(--text-muted); font-size: .92rem; }
+        .footer-col h4 { color: #fff; margin-bottom: 18px; font-size: 1.05rem; }
+        .footer-col ul li { margin-bottom: 10px; color: var(--text-muted); font-size: .92rem; }
+        .footer-col ul li a { transition: var(--transition); }
+        .footer-col ul li a:hover { color: var(--orange); }
+        .footer-social { display: flex; gap: 14px; }
+        .footer-social a { width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, .07); display: flex; align-items: center; justify-content: center; color: #fff; transition: var(--transition); }
+        .footer-social a:hover { background: var(--orange); transform: translateY(-4px); }
+        .footer-bottom { margin-top: 50px; padding: 22px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, .07); color: var(--text-muted); font-size: .85rem; }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: #25d366; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(37, 211, 102, .5); z-index: 999; animation: pulse 2.2s infinite; transition: var(--transition); }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, .5); } 70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        /* REVEAL */
+        .reveal-up, .reveal-left, .reveal-right { opacity: 0; transition: opacity .8s ease, transform .8s ease; will-change: opacity, transform; }
+        .reveal-up { transform: translateY(40px); }
+        .reveal-left { transform: translateX(-60px); }
+        .reveal-right { transform: translateX(60px); }
+        .reveal-up.visible, .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: translate(0, 0); }
+
+        /* RESPONSIVO */
+        @media (max-width: 980px) {
+            .sobre-grid { grid-template-columns: 1fr; gap: 36px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { position: fixed; top: 0; right: -100%; width: 78%; max-width: 320px; height: 100vh; background: var(--black-soft); flex-direction: column; justify-content: center; gap: 30px; padding: 40px; transition: right .4s ease; box-shadow: -10px 0 40px rgba(0, 0, 0, .5); }
+            .nav-menu.open { right: 0; }
+            .nav-link { font-size: 1.2rem; }
+            .hamburger { display: flex; }
+            .emocional-bg { background-attachment: scroll; }
+            .hero-content { padding-top: 110px; text-align: left; }
+            .hero-buttons .btn { flex: 1; min-width: 100%; }
+            .section { padding: 64px 0; }
+            .emocional { padding: 90px 0; }
+        }
+        @media (max-width: 560px) {
+            .container { padding: 0 18px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .menu-grid { grid-template-columns: 1fr; }
+            .hero-seals { gap: 10px 18px; }
+            .seal { font-size: .82rem; }
+            .whatsapp-float { width: 54px; height: 54px; bottom: 18px; right: 18px; }
+            .whatsapp-float svg { width: 28px; height: 28px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+            .reveal-up, .reveal-left, .reveal-right { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="logo"><span class="logo-flame">🔥</span> BRASA<span class="logo-accent">BURGER</span></a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#destaques" class="nav-link">Destaques</a>
+                <a href="#mais-pedidos" class="nav-link">Cardápio</a>
+                <a href="#combos" class="nav-link">Combos</a>
+                <a href="#sobre" class="nav-link">Sobre</a>
+                <a href="#contato" class="nav-link">Contato</a>
+                <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="btn btn-whatsapp btn-nav" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    Pedir Agora
+                </a>
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- 1. HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-video-wrap">
+            <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&q=80">
+                <source src="https://cdn.coverr.co/videos/coverr-grilling-a-burger-1080p/1080p.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-text reveal-left">
+                <span class="hero-badge">🔥 Hamburgueria Artesanal</span>
+                <h1 class="hero-title">O Hambúrguer Artesanal Que Vai Fazer Você <span class="text-accent">Esquecer Todos os Outros.</span></h1>
+                <p class="hero-subtitle">Carne suculenta, queijo derretendo, pão macio e ingredientes selecionados para entregar uma explosão de sabor em cada mordida.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        Pedir Agora pelo WhatsApp
+                    </a>
+                    <a href="#mais-pedidos" class="btn btn-outline btn-lg">Ver Cardápio</a>
+                </div>
+                <div class="hero-seals">
+                    <span class="seal">✔ Artesanal</span>
+                    <span class="seal">✔ Ingredientes Frescos</span>
+                    <span class="seal">✔ Entrega Rápida</span>
+                    <span class="seal">✔ Sabor Irresistível</span>
+                </div>
+            </div>
+        </div>
+        <a href="#destaques" class="scroll-down" aria-label="Rolar para baixo"><span></span></a>
+    </section>
+
+    <!-- 2. DESTAQUES -->
+    <section class="section" id="destaques">
+        <div class="container">
+            <div class="section-head reveal-up">
+                <span class="section-tag">Por que a Brasa?</span>
+                <h2 class="section-title">Sabor Artesanal de Verdade</h2>
+                <p class="section-desc">Feito na hora. Servido com vontade.</p>
+            </div>
+            <div class="destaques-grid">
+                <article class="destaque-card reveal-up"><div class="destaque-icon">🍔</div><h3>Feito na Hora</h3><p>Cada hambúrguer é montado e grelhado no momento do seu pedido, garantindo frescor e sabor.</p></article>
+                <article class="destaque-card reveal-up" data-delay="100"><div class="destaque-icon">🥩</div><h3>Carnes Selecionadas</h3><p>Blends suculentos de carnes nobres, grelhados no ponto certo da brasa para máxima maciez.</p></article>
+                <article class="destaque-card reveal-up" data-delay="200"><div class="destaque-icon">🧂</div><h3>Molhos da Casa</h3><p>Receitas exclusivas criadas pelos nossos chefs para dar aquele toque irresistível.</p></article>
+                <article class="destaque-card reveal-up" data-delay="300"><div class="destaque-icon">🍟</div><h3>Combos Completos</h3><p>Hambúrguer + batata crocante + bebida gelada. A combinação perfeita pra matar a fome.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. OS MAIS PEDIDOS -->
+    <section class="section section-dark" id="mais-pedidos">
+        <div class="container">
+            <div class="section-head reveal-up">
+                <span class="section-tag">Cardápio</span>
+                <h2 class="section-title">Os Mais Pedidos 🔥</h2>
+                <p class="section-desc">O hambúrguer que conquista na primeira mordida.</p>
+            </div>
+            <div class="menu-grid">
+                <article class="menu-card reveal-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=600&q=80" alt="Smash Bacon" loading="lazy"><span class="menu-flag">Mais Vendido</span></div><div class="menu-body"><h3>Smash Bacon</h3><p>Dois smashs suculentos, bacon crocante, cheddar derretido e molho especial.</p><div class="menu-footer"><span class="menu-price">R$ 29,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Smash%20Bacon" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="80"><div class="menu-img"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Cheddar Supremo" loading="lazy"></div><div class="menu-body"><h3>Cheddar Supremo</h3><p>Carne 180g, cascata de cheddar cremoso, cebola caramelizada e pão brioche.</p><div class="menu-footer"><span class="menu-price">R$ 32,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Cheddar%20Supremo" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="160"><div class="menu-img"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80" alt="Duplo Artesanal" loading="lazy"></div><div class="menu-body"><h3>Duplo Artesanal</h3><p>Duas carnes artesanais, queijo prato, alface, tomate e maionese da casa.</p><div class="menu-footer"><span class="menu-price">R$ 34,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Duplo%20Artesanal" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="240"><div class="menu-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=600&q=80" alt="Barbecue Crispy" loading="lazy"></div><div class="menu-body"><h3>Barbecue Crispy</h3><p>Carne grelhada, onion rings crocantes, cheddar e molho barbecue defumado.</p><div class="menu-footer"><span class="menu-price">R$ 33,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Barbecue%20Crispy" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80" alt="Clássico da Casa" loading="lazy"></div><div class="menu-body"><h3>Clássico da Casa</h3><p>Carne suculenta, queijo, salada fresca e o nosso molho secreto. Simples e perfeito.</p><div class="menu-footer"><span class="menu-price">R$ 27,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Cl%C3%A1ssico%20da%20Casa" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="80"><div class="menu-img"><img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=600&q=80" alt="Frango Crocante" loading="lazy"></div><div class="menu-body"><h3>Frango Crocante</h3><p>Filé de frango empanado crocante, queijo, alface americana e maionese verde.</p><div class="menu-footer"><span class="menu-price">R$ 28,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Frango%20Crocante" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="160"><div class="menu-img"><img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy"><span class="menu-flag">Combo</span></div><div class="menu-body"><h3>Combo Família</h3><p>4 hambúrgueres artesanais, 2 batatas grandes e 2 refrigerantes de 1L.</p><div class="menu-footer"><span class="menu-price">R$ 119,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Fam%C3%ADlia" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="240"><div class="menu-img"><img src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=600&q=80" alt="Batata Especial" loading="lazy"></div><div class="menu-body"><h3>Batata Especial</h3><p>Batata frita crocante coberta com cheddar cremoso e generosas tiras de bacon.</p><div class="menu-footer"><span class="menu-price">R$ 24,90</span><a href="https://wa.me/5511999999999?text=Quero%20a%20Batata%20Especial" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. EMOCIONAL -->
+    <section class="emocional">
+        <div class="emocional-bg" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?auto=format&fit=crop&w=1600&q=80');"></div>
+        <div class="emocional-overlay"></div>
+        <div class="container reveal-up">
+            <h2 class="emocional-title">Não é só um hambúrguer.<br><span class="text-accent">É uma experiência de sabor.</span></h2>
+            <p class="emocional-sub">Cada detalhe é preparado para entregar aquele sabor marcante que você sente antes mesmo da primeira mordida.</p>
+            <a href="https://wa.me/5511999999999?text=Quero%20pedir%20agora!" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">Quero Pedir Agora</a>
+        </div>
+    </section>
+
+    <!-- 5. COMBOS -->
+    <section class="section" id="combos">
+        <div class="container">
+            <div class="section-head reveal-up">
+                <span class="section-tag">Vale a Pena</span>
+                <h2 class="section-title">Combos Imperdíveis</h2>
+                <p class="section-desc">Peça agora e mate sua fome com estilo.</p>
+            </div>
+            <div class="combos-grid">
+                <article class="combo-card reveal-up"><div class="combo-img"><img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80" alt="Combo Individual" loading="lazy"></div><div class="combo-body"><h3>Combo Individual</h3><p>Hambúrguer artesanal + batata + refrigerante.</p><span class="menu-price">R$ 39,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Individual" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up" data-delay="100"><div class="combo-img"><img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=600&q=80" alt="Combo Casal" loading="lazy"></div><div class="combo-body"><h3>Combo Casal</h3><p>2 hambúrgueres + batata grande + 2 bebidas.</p><span class="menu-price">R$ 69,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Casal" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up" data-delay="200"><div class="combo-img"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy"></div><div class="combo-body"><h3>Combo Família</h3><p>4 hambúrgueres + 2 batatas + 2 refris de 1L.</p><span class="menu-price">R$ 119,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Fam%C3%ADlia" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up" data-delay="300"><div class="combo-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Combo Smash Duplo" loading="lazy"></div><div class="combo-body"><h3>Combo Smash Duplo</h3><p>2 smash duplos + batata cheddar bacon + 2 bebidas.</p><span class="menu-price">R$ 84,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Smash%20Duplo" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SOBRE -->
+    <section class="section section-dark" id="sobre">
+        <div class="container sobre-grid">
+            <div class="sobre-img reveal-left"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Cozinha da Brasa Burger" loading="lazy"></div>
+            <div class="sobre-text reveal-right">
+                <span class="section-tag">Nossa História</span>
+                <h2 class="section-title">Paixão por Hambúrguer Artesanal</h2>
+                <p>Nascemos com uma missão simples: transformar hambúrguer artesanal em uma experiência inesquecível. Trabalhamos com ingredientes selecionados, preparo cuidadoso e receitas criadas para quem valoriza sabor de verdade.</p>
+                <p>Da chapa quente ao molho da casa, cada detalhe é pensado para entregar carne suculenta, queijo derretendo e muito sabor em cada pedido.</p>
+                <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20conhecer%20o%20card%C3%A1pio." class="btn btn-whatsapp" target="_blank" rel="noopener">Fazer meu Pedido</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. AVALIAÇÕES -->
+    <section class="section">
+        <div class="container">
+            <div class="section-head reveal-up">
+                <span class="section-tag">Quem Prova, Aprova</span>
+                <h2 class="section-title">O Que Dizem Nossos Clientes</h2>
+            </div>
+            <div class="reviews-grid">
+                <article class="review-card reveal-up"><div class="stars">★★★★★</div><p>"O melhor hambúrguer artesanal que já comi! A carne desmancha na boca e o molho é viciante."</p><div class="review-author"><div class="avatar">M</div><span><strong>Marcos Oliveira</strong><small>Cliente desde 2023</small></span></div></article>
+                <article class="review-card reveal-up" data-delay="100"><div class="stars">★★★★★</div><p>"Entrega rápida e lanche impecável. Chegou quentinho e do jeitinho que eu pedi. Recomendo demais!"</p><div class="review-author"><div class="avatar">J</div><span><strong>Juliana Santos</strong><small>Pedido via WhatsApp</small></span></div></article>
+                <article class="review-card reveal-up" data-delay="200"><div class="stars">★★★★★</div><p>"O cheddar, o bacon e a carne são simplesmente perfeitos. Virei cliente fiel da Brasa Burger!"</p><div class="review-author"><div class="avatar">R</div><span><strong>Rafael Lima</strong><small>Fã de Smash</small></span></div></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. GALERIA -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-head reveal-up">
+                <span class="section-tag">@brasaburger</span>
+                <h2 class="section-title">Bateu a Fome? Olha Isso 📸</h2>
+                <p class="section-desc">Carne suculenta, queijo derretendo e muito sabor.</p>
+            </div>
+        </div>
+        <div class="gallery-grid">
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer artesanal" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer com bacon" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=500&q=80" alt="Batata frita" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer duplo" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=80" alt="Combo hambúrguer" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer barbecue" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80" alt="Refrigerante" loading="lazy"></a>
+            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=80" alt="Cheeseburger" loading="lazy"></a>
+        </div>
+    </section>
+
+    <!-- 9. CTA FINAL -->
+    <section class="cta-final" id="contato">
+        <div class="container reveal-up">
+            <h2>Bateu a fome? 🔥</h2>
+            <p>Peça agora e receba um hambúrguer artesanal de verdade.</p>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20agora." class="btn btn-whatsapp btn-xl" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                Pedir pelo WhatsApp
+            </a>
+            <div class="info-grid">
+                <div class="info-item"><span class="info-icon">🕒</span><strong>Horário</strong><p>Ter a Dom<br>18h às 23h30</p></div>
+                <div class="info-item"><span class="info-icon">🛵</span><strong>Entrega</strong><p>Toda a região<br>num raio de 8km</p></div>
+                <div class="info-item"><span class="info-icon">📞</span><strong>WhatsApp</strong><p>(11) 99999-9999</p></div>
+                <div class="info-item"><span class="info-icon">📍</span><strong>Endereço</strong><p>Rua das Brasas, 123<br>Centro - SP</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. RODAPÉ -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="#hero" class="logo logo-footer"><span class="logo-flame">🔥</span> BRASA<span class="logo-accent">BURGER</span></a>
+                <p>Sabor artesanal de verdade. Feito na hora, servido com vontade. O hambúrguer que conquista na primeira mordida.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Links Rápidos</h4>
+                <ul><li><a href="#destaques">Destaques</a></li><li><a href="#mais-pedidos">Cardápio</a></li><li><a href="#combos">Combos</a></li><li><a href="#sobre">Sobre Nós</a></li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contato</h4>
+                <ul><li>📍 Rua das Brasas, 123 - SP</li><li>📞 (11) 99999-9999</li><li>🕒 Ter a Dom, 18h às 23h30</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Siga a Gente</h4>
+                <div class="footer-social">
+                    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07c-4.35.2-6.78 2.62-6.98 6.98C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32A6.16 6.16 0 0012 5.84zm0 10.16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Brasa Burger. Todos os direitos reservados. Feito com 🔥 e muito sabor.</p></div>
+    </footer>
+
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Pedir pelo WhatsApp">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    </a>
+
+    <script>
+        (function () {
+            'use strict';
+            var navbar = document.getElementById('navbar');
+            var onScroll = function () { navbar.classList.toggle('scrolled', window.scrollY > 60); };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            var hamburger = document.getElementById('hamburger');
+            var navMenu = document.getElementById('navMenu');
+            function toggleMenu(force) {
+                var open = typeof force === 'boolean' ? force : !navMenu.classList.contains('open');
+                navMenu.classList.toggle('open', open);
+                hamburger.classList.toggle('active', open);
+                document.body.style.overflow = open ? 'hidden' : '';
+            }
+            hamburger.addEventListener('click', function () { toggleMenu(); });
+            navMenu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { toggleMenu(false); }); });
+            window.addEventListener('resize', function () { if (window.innerWidth > 768) toggleMenu(false); });
+
+            var revealEls = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function (entries, obs) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var delay = entry.target.dataset.delay || 0;
+                            setTimeout(function () { entry.target.classList.add('visible'); }, delay);
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+                revealEls.forEach(function (el) { observer.observe(el); });
+            } else {
+                revealEls.forEach(function (el) { el.classList.add('visible'); });
+            }
+
+            var heroVideo = document.querySelector('.hero-video');
+            if (heroVideo) {
+                var tryPlay = function () { var p = heroVideo.play(); if (p && typeof p.catch === 'function') p.catch(function () {}); };
+                heroVideo.addEventListener('loadeddata', tryPlay);
+                tryPlay();
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+                anchor.addEventListener('click', function (e) {
+                    var targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    var target = document.querySelector(targetId);
+                    if (!target) return;
+                    e.preventDefault();
+                    var offset = navbar.offsetHeight + 10;
+                    var top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
