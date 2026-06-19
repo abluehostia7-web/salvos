@@ -248,6 +248,13 @@
             .hero-buttons .btn { flex: 1; min-width: 100%; }
             .section { padding: 64px 0; }
             .emocional { padding: 90px 0; }
+            /* Tudo em coluna unica (um por linha) */
+            .destaques-grid, .menu-grid, .combos-grid, .reviews-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .menu-card, .combo-card, .destaque-card, .review-card { max-width: 460px; margin-left: auto; margin-right: auto; width: 100%; }
+            .menu-body, .combo-body { text-align: center; }
+            .menu-footer { justify-content: center; }
+            .combo-body .menu-price { text-align: center; }
             .modal { grid-template-columns: 1fr; }
             .modal-img { min-height: 200px; max-height: 240px; }
             .modal-body { padding: 24px; }
@@ -256,7 +263,8 @@
         @media (max-width: 560px) {
             .container { padding: 0 18px; }
             .footer-grid { grid-template-columns: 1fr; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: 1fr; gap: 14px; }
+            .gallery-item { max-width: 460px; margin: 0 auto; width: 100%; border-radius: 14px; }
             .menu-grid { grid-template-columns: 1fr; }
             .hero-seals { gap: 10px 18px; }
             .seal { font-size: .82rem; }
