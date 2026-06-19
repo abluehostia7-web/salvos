@@ -200,6 +200,28 @@
         .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .back-to-top:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 10px 24px rgba(192, 32, 42, .6); }
 
+        /* DICA DE CLIQUE NAS IMAGENS */
+        .menu-img, .combo-img { cursor: pointer; }
+        .menu-img::after, .combo-img::after { content: '🔍 Ver ingredientes'; position: absolute; left: 0; right: 0; bottom: 0; padding: 10px; text-align: center; font-size: .8rem; font-weight: 600; color: #fff; background: linear-gradient(0deg, rgba(192,32,42,.92), transparent); opacity: 0; transform: translateY(8px); transition: var(--transition); }
+        .menu-card:hover .menu-img::after, .combo-card:hover .combo-img::after { opacity: 1; transform: translateY(0); }
+
+        /* POPUP / LIGHTBOX DE INGREDIENTES */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, .82); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity .3s ease; }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        .modal { position: relative; background: var(--dark); border: 1px solid rgba(255, 255, 255, .08); border-radius: var(--radius); max-width: 880px; width: 100%; max-height: 90vh; overflow: auto; display: grid; grid-template-columns: 1fr 1fr; transform: scale(.93); transition: transform .3s cubic-bezier(.2,.7,.3,1.4); }
+        .modal-overlay.open .modal { transform: scale(1); }
+        .modal-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; }
+        .modal-body { padding: 32px; }
+        .modal-tag { display: inline-block; color: var(--orange); font-weight: 700; font-size: .8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+        .modal-title { font-size: 2rem; color: #fff; margin-bottom: 10px; }
+        .modal-desc { color: var(--text-muted); font-size: .95rem; margin-bottom: 18px; }
+        .modal-ingredients { list-style: none; margin: 0 0 22px; }
+        .modal-ingredients li { color: var(--text-light); font-size: .92rem; padding: 7px 0 7px 28px; position: relative; border-bottom: 1px dashed rgba(255,255,255,.08); }
+        .modal-ingredients li::before { content: '🔥'; position: absolute; left: 0; top: 6px; font-size: .85rem; }
+        .modal-footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+        .modal-close { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 50%; background: rgba(0, 0, 0, .55); color: #fff; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; z-index: 3; transition: var(--transition); }
+        .modal-close:hover { background: var(--red); transform: rotate(90deg); }
+
         /* REVEAL */
         .reveal-up, .reveal-left, .reveal-right { opacity: 0; transition: opacity .8s ease, transform .8s ease; will-change: opacity, transform; }
         .reveal-up { transform: translateY(40px); }
@@ -226,6 +248,10 @@
             .hero-buttons .btn { flex: 1; min-width: 100%; }
             .section { padding: 64px 0; }
             .emocional { padding: 90px 0; }
+            .modal { grid-template-columns: 1fr; }
+            .modal-img { min-height: 200px; max-height: 240px; }
+            .modal-body { padding: 24px; }
+            .modal-title { font-size: 1.6rem; }
         }
         @media (max-width: 560px) {
             .container { padding: 0 18px; }
@@ -256,7 +282,7 @@
                 <a href="#combos" class="nav-link">Combos</a>
                 <a href="#sobre" class="nav-link">Sobre</a>
                 <a href="#contato" class="nav-link">Contato</a>
-                <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="btn btn-whatsapp btn-nav" target="_blank" rel="noopener">
+                <a href="https://wa.me/5512997241895?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="btn btn-whatsapp btn-nav" target="_blank" rel="noopener">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     Pedir Agora
                 </a>
@@ -275,7 +301,7 @@
                 <h1 class="hero-title">O Hambúrguer Artesanal Que Vai Fazer Você <span class="text-accent">Esquecer Todos os Outros.</span></h1>
                 <p class="hero-subtitle">Carne suculenta, queijo derretendo, pão macio e ingredientes selecionados para entregar uma explosão de sabor em cada mordida.</p>
                 <div class="hero-buttons">
-                    <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">
+                    <a href="https://wa.me/5512997241895?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                         Pedir Agora pelo WhatsApp
                     </a>
@@ -325,14 +351,14 @@
                 <p class="section-desc">O hambúrguer que conquista na primeira mordida.</p>
             </div>
             <div class="menu-grid">
-                <article class="menu-card reveal-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=600&q=80" alt="Smash Bacon" loading="lazy"><span class="menu-flag">Mais Vendido</span></div><div class="menu-body"><h3>Smash Bacon</h3><p>Dois smashs suculentos, bacon crocante, cheddar derretido e molho especial.</p><div class="menu-footer"><span class="menu-price">R$ 29,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Smash%20Bacon" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up" data-delay="80"><div class="menu-img"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Cheddar Supremo" loading="lazy"></div><div class="menu-body"><h3>Cheddar Supremo</h3><p>Carne 180g, cascata de cheddar cremoso, cebola caramelizada e pão brioche.</p><div class="menu-footer"><span class="menu-price">R$ 32,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Cheddar%20Supremo" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up" data-delay="160"><div class="menu-img"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80" alt="Duplo Artesanal" loading="lazy"></div><div class="menu-body"><h3>Duplo Artesanal</h3><p>Duas carnes artesanais, queijo prato, alface, tomate e maionese da casa.</p><div class="menu-footer"><span class="menu-price">R$ 34,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Duplo%20Artesanal" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up" data-delay="240"><div class="menu-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=600&q=80" alt="Barbecue Crispy" loading="lazy"></div><div class="menu-body"><h3>Barbecue Crispy</h3><p>Carne grelhada, onion rings crocantes, cheddar e molho barbecue defumado.</p><div class="menu-footer"><span class="menu-price">R$ 33,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Barbecue%20Crispy" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80" alt="Clássico da Casa" loading="lazy"></div><div class="menu-body"><h3>Clássico da Casa</h3><p>Carne suculenta, queijo, salada fresca e o nosso molho secreto. Simples e perfeito.</p><div class="menu-footer"><span class="menu-price">R$ 27,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Cl%C3%A1ssico%20da%20Casa" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up" data-delay="80"><div class="menu-img"><img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=600&q=80" alt="Frango Crocante" loading="lazy"></div><div class="menu-body"><h3>Frango Crocante</h3><p>Filé de frango empanado crocante, queijo, alface americana e maionese verde.</p><div class="menu-footer"><span class="menu-price">R$ 28,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Frango%20Crocante" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up" data-delay="160"><div class="menu-img"><img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy"><span class="menu-flag">Combo</span></div><div class="menu-body"><h3>Combo Família</h3><p>4 hambúrgueres artesanais, 2 batatas grandes e 2 refrigerantes de 1L.</p><div class="menu-footer"><span class="menu-price">R$ 119,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Fam%C3%ADlia" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
-                <article class="menu-card reveal-up" data-delay="240"><div class="menu-img"><img src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=600&q=80" alt="Batata Especial" loading="lazy"></div><div class="menu-body"><h3>Batata Especial</h3><p>Batata frita crocante coberta com cheddar cremoso e generosas tiras de bacon.</p><div class="menu-footer"><span class="menu-price">R$ 24,90</span><a href="https://wa.me/5511999999999?text=Quero%20a%20Batata%20Especial" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=600&q=80" alt="Smash Bacon" loading="lazy"><span class="menu-flag">Mais Vendido</span></div><div class="menu-body"><h3>Smash Bacon</h3><p>Dois smashs suculentos, bacon crocante, cheddar derretido e molho especial.</p><div class="menu-footer"><span class="menu-price">R$ 29,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Smash%20Bacon" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="80"><div class="menu-img"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Cheddar Supremo" loading="lazy"></div><div class="menu-body"><h3>Cheddar Supremo</h3><p>Carne 180g, cascata de cheddar cremoso, cebola caramelizada e pão brioche.</p><div class="menu-footer"><span class="menu-price">R$ 32,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Cheddar%20Supremo" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="160"><div class="menu-img"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=600&q=80" alt="Duplo Artesanal" loading="lazy"></div><div class="menu-body"><h3>Duplo Artesanal</h3><p>Duas carnes artesanais, queijo prato, alface, tomate e maionese da casa.</p><div class="menu-footer"><span class="menu-price">R$ 34,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Duplo%20Artesanal" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="240"><div class="menu-img"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=600&q=80" alt="Barbecue Crispy" loading="lazy"></div><div class="menu-body"><h3>Barbecue Crispy</h3><p>Carne grelhada, onion rings crocantes, cheddar e molho barbecue defumado.</p><div class="menu-footer"><span class="menu-price">R$ 33,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Barbecue%20Crispy" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up"><div class="menu-img"><img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80" alt="Clássico da Casa" loading="lazy"></div><div class="menu-body"><h3>Clássico da Casa</h3><p>Carne suculenta, queijo, salada fresca e o nosso molho secreto. Simples e perfeito.</p><div class="menu-footer"><span class="menu-price">R$ 27,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Cl%C3%A1ssico%20da%20Casa" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="80"><div class="menu-img"><img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=600&q=80" alt="Frango Crocante" loading="lazy"></div><div class="menu-body"><h3>Frango Crocante</h3><p>Filé de frango empanado crocante, queijo, alface americana e maionese verde.</p><div class="menu-footer"><span class="menu-price">R$ 28,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Frango%20Crocante" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="160"><div class="menu-img"><img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy"><span class="menu-flag">Combo</span></div><div class="menu-body"><h3>Combo Família</h3><p>4 hambúrgueres artesanais, 2 batatas grandes e 2 refrigerantes de 1L.</p><div class="menu-footer"><span class="menu-price">R$ 119,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Combo%20Fam%C3%ADlia" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
+                <article class="menu-card reveal-up" data-delay="240"><div class="menu-img"><img src="https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=600&q=80" alt="Batata Especial" loading="lazy"></div><div class="menu-body"><h3>Batata Especial</h3><p>Batata frita crocante coberta com cheddar cremoso e generosas tiras de bacon.</p><div class="menu-footer"><span class="menu-price">R$ 24,90</span><a href="https://wa.me/5512997241895?text=Quero%20a%20Batata%20Especial" class="btn btn-mini" target="_blank" rel="noopener">Pedir</a></div></div></article>
             </div>
         </div>
     </section>
@@ -344,7 +370,7 @@
         <div class="container reveal-up">
             <h2 class="emocional-title">Não é só um hambúrguer.<br><span class="text-accent">É uma experiência de sabor.</span></h2>
             <p class="emocional-sub">Cada detalhe é preparado para entregar aquele sabor marcante que você sente antes mesmo da primeira mordida.</p>
-            <a href="https://wa.me/5511999999999?text=Quero%20pedir%20agora!" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">Quero Pedir Agora</a>
+            <a href="https://wa.me/5512997241895?text=Quero%20pedir%20agora!" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">Quero Pedir Agora</a>
         </div>
     </section>
 
@@ -357,10 +383,10 @@
                 <p class="section-desc">Peça agora e mate sua fome com estilo.</p>
             </div>
             <div class="combos-grid">
-                <article class="combo-card reveal-up"><div class="combo-img"><img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80" alt="Combo Individual" loading="lazy"></div><div class="combo-body"><h3>Combo Individual</h3><p>Hambúrguer artesanal + batata + refrigerante.</p><span class="menu-price">R$ 39,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Individual" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
-                <article class="combo-card reveal-up" data-delay="100"><div class="combo-img"><img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=600&q=80" alt="Combo Casal" loading="lazy"></div><div class="combo-body"><h3>Combo Casal</h3><p>2 hambúrgueres + batata grande + 2 bebidas.</p><span class="menu-price">R$ 69,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Casal" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
-                <article class="combo-card reveal-up" data-delay="200"><div class="combo-img"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy"></div><div class="combo-body"><h3>Combo Família</h3><p>4 hambúrgueres + 2 batatas + 2 refris de 1L.</p><span class="menu-price">R$ 119,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Fam%C3%ADlia" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
-                <article class="combo-card reveal-up" data-delay="300"><div class="combo-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Combo Smash Duplo" loading="lazy"></div><div class="combo-body"><h3>Combo Smash Duplo</h3><p>2 smash duplos + batata cheddar bacon + 2 bebidas.</p><span class="menu-price">R$ 84,90</span><a href="https://wa.me/5511999999999?text=Quero%20o%20Combo%20Smash%20Duplo" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up"><div class="combo-img"><img src="https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80" alt="Combo Individual" loading="lazy"></div><div class="combo-body"><h3>Combo Individual</h3><p>Hambúrguer artesanal + batata + refrigerante.</p><span class="menu-price">R$ 39,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Combo%20Individual" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up" data-delay="100"><div class="combo-img"><img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=600&q=80" alt="Combo Casal" loading="lazy"></div><div class="combo-body"><h3>Combo Casal</h3><p>2 hambúrgueres + batata grande + 2 bebidas.</p><span class="menu-price">R$ 69,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Combo%20Casal" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up" data-delay="200"><div class="combo-img"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy"></div><div class="combo-body"><h3>Combo Família</h3><p>4 hambúrgueres + 2 batatas + 2 refris de 1L.</p><span class="menu-price">R$ 119,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Combo%20Fam%C3%ADlia" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
+                <article class="combo-card reveal-up" data-delay="300"><div class="combo-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Combo Smash Duplo" loading="lazy"></div><div class="combo-body"><h3>Combo Smash Duplo</h3><p>2 smash duplos + batata cheddar bacon + 2 bebidas.</p><span class="menu-price">R$ 84,90</span><a href="https://wa.me/5512997241895?text=Quero%20o%20Combo%20Smash%20Duplo" class="btn btn-whatsapp btn-block" target="_blank" rel="noopener">Pedir Combo</a></div></article>
             </div>
         </div>
     </section>
@@ -374,7 +400,7 @@
                 <h2 class="section-title">Paixão por Hambúrguer Artesanal</h2>
                 <p>Nascemos com uma missão simples: transformar hambúrguer artesanal em uma experiência inesquecível. Trabalhamos com ingredientes selecionados, preparo cuidadoso e receitas criadas para quem valoriza sabor de verdade.</p>
                 <p>Da chapa quente ao molho da casa, cada detalhe é pensado para entregar carne suculenta, queijo derretendo e muito sabor em cada pedido.</p>
-                <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20conhecer%20o%20card%C3%A1pio." class="btn btn-whatsapp" target="_blank" rel="noopener">Fazer meu Pedido</a>
+                <a href="https://wa.me/5512997241895?text=Ol%C3%A1!%20Quero%20conhecer%20o%20card%C3%A1pio." class="btn btn-whatsapp" target="_blank" rel="noopener">Fazer meu Pedido</a>
             </div>
         </div>
     </section>
@@ -420,14 +446,14 @@
         <div class="container reveal-up">
             <h2>Bateu a fome? 🔥</h2>
             <p>Peça agora e receba um hambúrguer artesanal de verdade.</p>
-            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20agora." class="btn btn-whatsapp btn-xl" target="_blank" rel="noopener">
+            <a href="https://wa.me/5512997241895?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20agora." class="btn btn-whatsapp btn-xl" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                 Pedir pelo WhatsApp
             </a>
             <div class="info-grid">
                 <div class="info-item"><span class="info-icon">🕒</span><strong>Horário</strong><p>Ter a Dom<br>18h às 23h30</p></div>
                 <div class="info-item"><span class="info-icon">🛵</span><strong>Entrega</strong><p>Toda a região<br>num raio de 8km</p></div>
-                <div class="info-item"><span class="info-icon">📞</span><strong>WhatsApp</strong><p>(11) 99999-9999</p></div>
+                <div class="info-item"><span class="info-icon">📞</span><strong>WhatsApp</strong><p>(12) 99724-1895</p></div>
                 <div class="info-item"><span class="info-icon">📍</span><strong>Endereço</strong><p>Rua das Brasas, 123<br>Centro - SP</p></div>
             </div>
         </div>
@@ -446,12 +472,12 @@
             </div>
             <div class="footer-col">
                 <h4>Contato</h4>
-                <ul><li>📍 Rua das Brasas, 123 - SP</li><li>📞 (11) 99999-9999</li><li>🕒 Ter a Dom, 18h às 23h30</li></ul>
+                <ul><li>📍 Rua das Brasas, 123 - SP</li><li>📞 (12) 99724-1895</li><li>🕒 Ter a Dom, 18h às 23h30</li></ul>
             </div>
             <div class="footer-col">
                 <h4>Siga a Gente</h4>
                 <div class="footer-social">
-                    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
+                    <a href="https://wa.me/5512997241895" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
                     <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07c-4.35.2-6.78 2.62-6.98 6.98C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32A6.16 6.16 0 0012 5.84zm0 10.16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
                 </div>
             </div>
@@ -459,11 +485,29 @@
         <div class="footer-bottom"><p>© 2026 Brasa Burger. Todos os direitos reservados. Feito com 🔥 e muito sabor.</p></div>
     </footer>
 
+    <!-- POPUP / LIGHTBOX DE INGREDIENTES -->
+    <div class="modal-overlay" id="burgerModal" role="dialog" aria-modal="true">
+        <div class="modal">
+            <button class="modal-close" id="modalClose" aria-label="Fechar">&times;</button>
+            <img class="modal-img" id="modalImg" src="" alt="Hambúrguer">
+            <div class="modal-body">
+                <span class="modal-tag">🍔 Feito com</span>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-desc" id="modalDesc"></p>
+                <ul class="modal-ingredients" id="modalIngredients"></ul>
+                <div class="modal-footer">
+                    <span class="menu-price" id="modalPrice"></span>
+                    <a class="btn btn-whatsapp" id="modalOrder" href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo" title="Voltar ao topo">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
 
-    <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Pedir pelo WhatsApp">
+    <a href="https://wa.me/5512997241895?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Pedir pelo WhatsApp">
         <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.519 5.26l-.999 3.648 3.969-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
     </a>
 
@@ -484,6 +528,68 @@
                 backToTop.addEventListener('click', function () {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
+            }
+
+            // Popup / lightbox de ingredientes
+            var WHATS = '5512997241895';
+            var ingredientsMap = {
+                'Smash Bacon': ['Pão brioche selado na manteiga', '2 smash burgers suculentos (120g)', 'Bacon crocante', 'Cheddar derretido', 'Molho especial da casa'],
+                'Cheddar Supremo': ['Pão brioche', 'Burger artesanal 180g', 'Cascata de cheddar cremoso', 'Cebola caramelizada', 'Maionese da casa'],
+                'Duplo Artesanal': ['Pão australiano', '2 carnes artesanais (130g)', 'Queijo prato', 'Alface e tomate', 'Maionese da casa'],
+                'Barbecue Crispy': ['Pão brioche', 'Burger grelhado 160g', 'Onion rings crocantes', 'Cheddar', 'Molho barbecue defumado'],
+                'Clássico da Casa': ['Pão brioche', 'Burger suculento 150g', 'Queijo', 'Alface fresca e tomate', 'Molho secreto da casa'],
+                'Frango Crocante': ['Pão brioche', 'Filé de frango empanado crocante', 'Queijo', 'Alface americana', 'Maionese verde da casa'],
+                'Combo Família': ['4 hambúrgueres artesanais', '2 porções de batata grande', '2 refrigerantes de 1L'],
+                'Batata Especial': ['Batata frita crocante', 'Cheddar cremoso', 'Generosas tiras de bacon', 'Toque de cebolinha'],
+                'Combo Individual': ['1 hambúrguer artesanal', 'Batata frita crocante', 'Refrigerante'],
+                'Combo Casal': ['2 hambúrgueres artesanais', '1 batata grande', '2 bebidas geladas'],
+                'Combo Smash Duplo': ['2 smash duplos', 'Batata com cheddar e bacon', '2 bebidas geladas']
+            };
+
+            var modal = document.getElementById('burgerModal');
+            if (modal) {
+                var modalImg = document.getElementById('modalImg');
+                var modalTitle = document.getElementById('modalTitle');
+                var modalDesc = document.getElementById('modalDesc');
+                var modalIngredients = document.getElementById('modalIngredients');
+                var modalPrice = document.getElementById('modalPrice');
+                var modalOrder = document.getElementById('modalOrder');
+                var modalClose = document.getElementById('modalClose');
+
+                var openModal = function (card) {
+                    var img = card.querySelector('img');
+                    var title = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
+                    var desc = card.querySelector('p') ? card.querySelector('p').textContent.trim() : '';
+                    var price = card.querySelector('.menu-price') ? card.querySelector('.menu-price').textContent.trim() : '';
+                    modalImg.src = img ? img.src : '';
+                    modalImg.alt = title;
+                    modalTitle.textContent = title;
+                    modalDesc.textContent = desc;
+                    modalPrice.textContent = price;
+                    modalIngredients.innerHTML = '';
+                    var list = ingredientsMap[title] || desc.split(',').map(function (s) { return s.trim(); });
+                    list.forEach(function (item) {
+                        var li = document.createElement('li');
+                        li.textContent = item;
+                        modalIngredients.appendChild(li);
+                    });
+                    modalOrder.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent('Quero pedir o ' + title);
+                    modal.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                };
+                var closeModal = function () {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                };
+
+                document.querySelectorAll('.menu-card .menu-img, .combo-card .combo-img').forEach(function (el) {
+                    el.addEventListener('click', function () {
+                        openModal(el.closest('.menu-card, .combo-card'));
+                    });
+                });
+                modalClose.addEventListener('click', closeModal);
+                modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
             }
 
             var hamburger = document.getElementById('hamburger');
