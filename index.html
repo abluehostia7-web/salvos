@@ -50,7 +50,7 @@
         .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 18px 0; transition: var(--transition); }
         .navbar.scrolled { background: rgba(13, 13, 13, .92); backdrop-filter: blur(12px); padding: 12px 0; box-shadow: 0 6px 24px rgba(0, 0, 0, .4); }
         .nav-container { display: flex; align-items: center; justify-content: space-between; }
-        .logo { font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 6px; }
+        .logo { font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
         .logo-flame { font-size: 1.4rem; }
         .logo-accent { color: var(--orange); }
         .nav-menu { display: flex; align-items: center; gap: 28px; }
@@ -268,6 +268,8 @@
             .menu-grid { grid-template-columns: 1fr; }
             .hero-seals { gap: 10px 18px; }
             .seal { font-size: .82rem; }
+            .logo { font-size: 1.3rem; }
+            .logo-flame { font-size: 1.15rem; }
             .whatsapp-float { width: 54px; height: 54px; bottom: 18px; right: 18px; }
             .whatsapp-float svg { width: 28px; height: 28px; }
             .back-to-top { bottom: 82px; right: 18px; width: 44px; height: 44px; }
@@ -283,7 +285,7 @@
     <!-- NAVBAR -->
     <header class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="#hero" class="logo"><span class="logo-flame">🔥</span> BRASA<span class="logo-accent">BURGER</span></a>
+            <a href="#hero" class="logo"><span class="logo-flame">🔥</span> BRASA&nbsp;<span class="logo-accent">BURGER</span></a>
             <nav class="nav-menu" id="navMenu">
                 <a href="#destaques" class="nav-link">Destaques</a>
                 <a href="#mais-pedidos" class="nav-link">Cardápio</a>
@@ -471,7 +473,7 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-col">
-                <a href="#hero" class="logo logo-footer"><span class="logo-flame">🔥</span> BRASA<span class="logo-accent">BURGER</span></a>
+                <a href="#hero" class="logo logo-footer"><span class="logo-flame">🔥</span> BRASA&nbsp;<span class="logo-accent">BURGER</span></a>
                 <p>Sabor artesanal de verdade. Feito na hora, servido com vontade. O hambúrguer que conquista na primeira mordida.</p>
             </div>
             <div class="footer-col">
