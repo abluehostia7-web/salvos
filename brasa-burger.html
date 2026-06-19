@@ -159,9 +159,9 @@
 
         /* GALERIA */
         .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 30px; }
-        .gallery-item { position: relative; aspect-ratio: 1; overflow: hidden; }
+        .gallery-item { position: relative; aspect-ratio: 1; overflow: hidden; cursor: pointer; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, filter .5s ease; }
-        .gallery-item::after { content: '🔥'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: rgba(192, 32, 42, .55); opacity: 0; transition: var(--transition); }
+        .gallery-item::after { content: '🔍 Ver detalhes'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 700; color: #fff; text-align: center; background: rgba(192, 32, 42, .62); opacity: 0; transition: var(--transition); }
         .gallery-item:hover img { transform: scale(1.12); }
         .gallery-item:hover::after { opacity: 1; }
 
@@ -430,14 +430,14 @@
             </div>
         </div>
         <div class="gallery-grid">
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer artesanal" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer com bacon" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=500&q=80" alt="Batata frita" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer duplo" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=80" alt="Combo hambúrguer" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80" alt="Hambúrguer barbecue" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80" alt="Refrigerante" loading="lazy"></a>
-            <a class="gallery-item reveal-up" href="https://instagram.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=80" alt="Cheeseburger" loading="lazy"></a>
+            <div class="gallery-item reveal-up" data-title="Smash Bacon" data-desc="Dois smashs suculentos, bacon crocante, cheddar derretido e molho especial." data-price="R$ 29,90"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Smash Bacon" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Cheddar Supremo" data-desc="Carne 180g, cascata de cheddar cremoso, cebola caramelizada e pão brioche." data-price="R$ 32,90"><img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=500&q=80" alt="Cheddar Supremo" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Batata Especial" data-desc="Batata frita crocante coberta com cheddar cremoso e tiras de bacon." data-price="R$ 24,90"><img src="https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=500&q=80" alt="Batata Especial" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Duplo Artesanal" data-desc="Duas carnes artesanais, queijo prato, alface, tomate e maionese da casa." data-price="R$ 34,90"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=500&q=80" alt="Duplo Artesanal" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Combo Família" data-desc="4 hambúrgueres artesanais, 2 batatas grandes e 2 refrigerantes de 1L." data-price="R$ 119,90"><img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=500&q=80" alt="Combo Família" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Barbecue Crispy" data-desc="Carne grelhada, onion rings crocantes, cheddar e molho barbecue defumado." data-price="R$ 33,90"><img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80" alt="Barbecue Crispy" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Combo Individual" data-desc="Hambúrguer artesanal + batata crocante + refrigerante gelado." data-price="R$ 39,90"><img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=500&q=80" alt="Combo Individual" loading="lazy"></div>
+            <div class="gallery-item reveal-up" data-title="Clássico da Casa" data-desc="Carne suculenta, queijo, salada fresca e o nosso molho secreto." data-price="R$ 27,90"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=80" alt="Clássico da Casa" loading="lazy"></div>
         </div>
     </section>
 
@@ -556,18 +556,14 @@
                 var modalOrder = document.getElementById('modalOrder');
                 var modalClose = document.getElementById('modalClose');
 
-                var openModal = function (card) {
-                    var img = card.querySelector('img');
-                    var title = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
-                    var desc = card.querySelector('p') ? card.querySelector('p').textContent.trim() : '';
-                    var price = card.querySelector('.menu-price') ? card.querySelector('.menu-price').textContent.trim() : '';
-                    modalImg.src = img ? img.src : '';
+                var showModal = function (imgSrc, title, desc, price) {
+                    modalImg.src = imgSrc || '';
                     modalImg.alt = title;
                     modalTitle.textContent = title;
                     modalDesc.textContent = desc;
                     modalPrice.textContent = price;
                     modalIngredients.innerHTML = '';
-                    var list = ingredientsMap[title] || desc.split(',').map(function (s) { return s.trim(); });
+                    var list = ingredientsMap[title] || (desc ? desc.split(',').map(function (s) { return s.trim(); }) : []);
                     list.forEach(function (item) {
                         var li = document.createElement('li');
                         li.textContent = item;
@@ -577,6 +573,13 @@
                     modal.classList.add('open');
                     document.body.style.overflow = 'hidden';
                 };
+                var openModal = function (card) {
+                    var img = card.querySelector('img');
+                    var title = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
+                    var desc = card.querySelector('p') ? card.querySelector('p').textContent.trim() : '';
+                    var price = card.querySelector('.menu-price') ? card.querySelector('.menu-price').textContent.trim() : '';
+                    showModal(img ? img.src : '', title, desc, price);
+                };
                 var closeModal = function () {
                     modal.classList.remove('open');
                     document.body.style.overflow = '';
@@ -585,6 +588,12 @@
                 document.querySelectorAll('.menu-card .menu-img, .combo-card .combo-img').forEach(function (el) {
                     el.addEventListener('click', function () {
                         openModal(el.closest('.menu-card, .combo-card'));
+                    });
+                });
+                document.querySelectorAll('.gallery-item').forEach(function (el) {
+                    el.addEventListener('click', function () {
+                        var img = el.querySelector('img');
+                        showModal(img ? img.src : '', el.dataset.title || '', el.dataset.desc || '', el.dataset.price || '');
                     });
                 });
                 modalClose.addEventListener('click', closeModal);
